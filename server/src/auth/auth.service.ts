@@ -1,26 +1,55 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import * as bcrypt from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
+import { auth } from '../auth/entities/auth.entity';
+import { CreateAuthDto } from '../auth/dto/create-auth.dto';
+import { LoginUserDto } from '../auth/dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    @InjectModel(auth.name) private userModel: Model<auth>,
+    private jwtService: JwtService,
+  ) {}
+
+  // Foydalanuvchini ro'yxatdan o'tkazish
+  async register(createUserDto: CreateAuthDto): Promise<auth> {
+    const { email, password, name } = createUserDto;
+
+    // Parolni shifrlash
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new this.userModel({
+      email,
+      password: hashedPassword,
+      name,
+    });
+
+    return newUser.save();
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  // Tizimga kirish (login) va JWT yaratish
+  async login(loginUserDto: LoginUserDto) {
+    const { email, password } = loginUserDto;
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    const auth = await this.userModel.findOne({ email });
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
+    if (!auth) {
+      throw new Error('auth not found');
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    // Parolni tekshirish
+    const isMatch = await bcrypt.compare(password, auth.password);
+    if (!isMatch) {
+      throw new Error('Invalid credentials');
+    }
+
+    // JWT tokenini yaratish
+    const payload = { email: auth.email, sub: auth._id };
+    const token = this.jwtService.sign(payload);
+
+    return { access_token: token };
   }
 }
