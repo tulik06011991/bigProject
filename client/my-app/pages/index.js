@@ -29,7 +29,7 @@ const ProductsList = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <div key={product.id} className="border border-gray-200 rounded-lg p-4 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-            <img src={product.image} alt={product.title} className="w-full h-48 object-cover rounded-md mb-4" />
+            <img src={product.image} alt={product.title} className=" h-48 object-cover rounded-md mb-4" />
             <h2 className="text-lg font-semibold mb-2 text-gray-800">{product.title}</h2>
             <p className="text-gray-600 mb-4 text-sm line-clamp-3">{product.description}</p>
             <div className="flex items-center justify-between">
