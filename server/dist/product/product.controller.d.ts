@@ -4,9 +4,9 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export declare class ProductController {
     private readonly productService;
     constructor(productService: ProductService);
-    create(createProductDto: CreateProductDto): string;
-    findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateProductDto: UpdateProductDto): string;
-    remove(id: string): string;
+    create(createProductDto: CreateProductDto): any;
+    findAll(): any;
+    findOne(id: string): any;
+    update(id: string, updateProductDto: UpdateProductDto): any;
+    remove(id: string): any;
 }

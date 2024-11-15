@@ -10,18 +10,13 @@ exports.ProductModule = void 0;
 const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
 const product_controller_1 = require("./product.controller");
-const mongoose_1 = require("@nestjs/mongoose");
-const product_entity_1 = require("./entities/product.entity");
 let ProductModule = class ProductModule {
 };
 exports.ProductModule = ProductModule;
 exports.ProductModule = ProductModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: product_entity_1.Product.name, schema: product_entity_1.ProductSchema }]),
-        ],
         controllers: [product_controller_1.ProductController],
-        providers: [product_service_1.ProductService],
+        providers: [product_service_1.ProductsService],
     })
 ], ProductModule);
 //# sourceMappingURL=product.module.js.map

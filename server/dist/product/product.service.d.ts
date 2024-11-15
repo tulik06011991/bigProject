@@ -1,9 +1,11 @@
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-export declare class ProductService {
-    create(createProductDto: CreateProductDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateProductDto: UpdateProductDto): string;
-    remove(id: number): string;
+import { Model } from 'mongoose';
+import { Product } from './entities/product.entity';
+export declare class ProductsService {
+    private productModel;
+    constructor(productModel: Model<Product>);
+    findAll(): Promise<Product[]>;
+    findOne(id: string): Promise<Product>;
+    create(createProductDto: any): Promise<Product>;
+    update(id: string, updateProductDto: any): Promise<Product>;
+    remove(id: string): Promise<void>;
 }
