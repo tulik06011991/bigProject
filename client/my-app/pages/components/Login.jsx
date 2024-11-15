@@ -25,7 +25,7 @@ export default function Login() {
       // Login muvaffaqiyatli bo'lsa, tokenni saqlash va foydalanuvchini yo'naltirish
       localStorage.setItem("token", response.data.token); // Foydalanuvchi tokenini saqlash (masalan, LocalStorage)
       setLoading(false); // Loadingni to'xtatish
-      router.push("/dashboard"); // Dashboard sahifasiga yo'naltirish
+      router.push("/"); // Dashboard sahifasiga yo'naltirish
 
     } catch (err) {
       setLoading(false); // Loadingni to'xtatish
