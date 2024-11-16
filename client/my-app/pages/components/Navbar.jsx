@@ -10,8 +10,8 @@ const Navbar = () => {
           <Link href="/" className="text-gray-300 hover:text-white">Home</Link>
           <Link href="/components/Register" className="text-gray-300 hover:text-white">Register</Link>
           <Link href="/components/Login" className="text-gray-300 hover:text-white">Login</Link>
-          {/* <Link href="/services" className="text-gray-300 hover:text-white">Services</Link>
-          <Link href="/contact" className="text-gray-300 hover:text-white">Contact</Link> */}
+           <Link href="/components/Products" className="text-gray-300 hover:text-white">Mahsulot qo'shish</Link>
+          <Link href="/contact" className="text-gray-300 hover:text-white">Contact</Link> 
         </div>
       </div>
     </nav>
