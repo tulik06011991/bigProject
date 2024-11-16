@@ -15,6 +15,7 @@ const auth_module_1 = require("./auth/auth.module");
 const redis_module_1 = require("./redis.module");
 const products_module_1 = require("./products/products.module");
 const platform_express_1 = require("@nestjs/platform-express");
+const serve_static_1 = require("@nestjs/serve-static");
 const path = require("path");
 let AppModule = class AppModule {
 };
@@ -28,6 +29,10 @@ exports.AppModule = AppModule = __decorate([
             products_module_1.ProductsModule,
             platform_express_1.MulterModule.register({
                 dest: path.join(__dirname, '..', 'uploads'),
+            }),
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: path.join(__dirname, '..', 'uploads'),
+                serveRoot: '/uploads',
             }),
         ],
         controllers: [app_controller_1.AppController],
