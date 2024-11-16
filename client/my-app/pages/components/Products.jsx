@@ -29,7 +29,7 @@ const CreateProduct = () => {
     formData.append('image', image); // Faylni formaga qo'shamiz
 
     try {
-      const response = await axios.post('http://localhost:3001/products', formData, {
+      const response = await axios.post('http://localhost:4000/products', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
