@@ -38,11 +38,8 @@ let AuthController = AuthController_1 = class AuthController {
     }
     async login(loginUserDto) {
         try {
-            const token = await this.authService.login(loginUserDto);
-            return {
-                message: 'Login successful',
-                data: { token },
-            };
+            const result = await this.authService.login(loginUserDto);
+            return result;
         }
         catch (error) {
             this.logger.error('Login failed', error.stack);

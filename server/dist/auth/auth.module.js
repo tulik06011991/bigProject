@@ -9,10 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const jwt_1 = require("@nestjs/jwt");
+const redis_module_1 = require("../redis.module");
 const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const auth_entity_1 = require("./entities/auth.entity");
-const jwt_1 = require("@nestjs/jwt");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -24,6 +25,7 @@ exports.AuthModule = AuthModule = __decorate([
                 secret: 'your-jwt-secret',
                 signOptions: { expiresIn: '1h' },
             }),
+            redis_module_1.RedisModule,
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService],

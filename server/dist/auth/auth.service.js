@@ -20,10 +20,12 @@ const mongoose_2 = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt_1 = require("@nestjs/jwt");
 const auth_entity_1 = require("../auth/entities/auth.entity");
+const redis_service_1 = require("../redis.service");
 let AuthService = AuthService_1 = class AuthService {
-    constructor(userModel, jwtService) {
+    constructor(userModel, jwtService, redisService) {
         this.userModel = userModel;
         this.jwtService = jwtService;
+        this.redisService = redisService;
         this.logger = new common_1.Logger(AuthService_1.name);
     }
     async register(createUserDto) {
@@ -51,6 +53,14 @@ let AuthService = AuthService_1 = class AuthService {
     }
     async login(loginUserDto) {
         const { email, password } = loginUserDto;
+        const cachedUser = await this.redisService.get(email);
+        if (cachedUser) {
+            this.logger.log(`User found in Redis for email: ${email}`);
+            return {
+                message: 'Login successful from cache',
+                data: { token: cachedUser },
+            };
+        }
         const auth = await this.userModel.findOne({ email });
         if (!auth) {
             this.logger.warn(`Auth not found for email: ${email}`);
@@ -63,8 +73,12 @@ let AuthService = AuthService_1 = class AuthService {
         }
         const payload = { email: auth.email, sub: auth._id };
         const token = this.jwtService.sign(payload);
+        await this.redisService.set(email, token);
         this.logger.log(`User logged in with email: ${email}`);
-        return { access_token: token };
+        return {
+            message: 'Login successful',
+            data: { token },
+        };
     }
 };
 exports.AuthService = AuthService;
@@ -72,6 +86,7 @@ exports.AuthService = AuthService = AuthService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(auth_entity_1.auth.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        redis_service_1.RedisService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

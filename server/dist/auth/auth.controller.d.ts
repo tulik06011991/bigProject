@@ -12,9 +12,7 @@ export declare class AuthController {
     login(loginUserDto: LoginUserDto): Promise<{
         message: string;
         data: {
-            token: {
-                access_token: string;
-            };
+            token: string;
         };
     }>;
 }

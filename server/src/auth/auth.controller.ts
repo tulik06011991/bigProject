@@ -31,11 +31,8 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
     try {
-      const token = await this.authService.login(loginUserDto);
-      return {
-        message: 'Login successful',
-        data: { token },
-      };
+      const result = await this.authService.login(loginUserDto);
+      return result;  // JWT tokenini qaytarish
     } catch (error) {
       this.logger.error('Login failed', error.stack);
       throw new HttpException(

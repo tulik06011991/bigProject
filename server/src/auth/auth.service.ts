@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { auth } from '../auth/entities/auth.entity';
 import { CreateAuthDto } from '../auth/dto/create-auth.dto';
 import { LoginUserDto } from '../auth/dto/login-user.dto';
+import { RedisService } from '../redis.service'; // RedisService import qilamiz
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(
     @InjectModel(auth.name) private userModel: Model<auth>,
     private jwtService: JwtService,
+    private redisService: RedisService, // RedisServisini injektsiya qilamiz
   ) {}
 
   // Foydalanuvchini ro'yxatdan o'tkazish
@@ -56,7 +58,17 @@ export class AuthService {
   async login(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
 
-    // Foydalanuvchini tekshirish
+    // Foydalanuvchini Redis'dan tekshirish
+    const cachedUser = await this.redisService.get(email);
+    if (cachedUser) {
+      this.logger.log(`User found in Redis for email: ${email}`);
+      return {
+        message: 'Login successful from cache',
+        data: { token: cachedUser },
+      };
+    }
+
+    // Redis'da topilmasa, MongoDB'dan izlash
     const auth = await this.userModel.findOne({ email });
     if (!auth) {
       this.logger.warn(`Auth not found for email: ${email}`);
@@ -80,7 +92,13 @@ export class AuthService {
     const payload = { email: auth.email, sub: auth._id };
     const token = this.jwtService.sign(payload);
 
+    // Redis'ga saqlash
+    await this.redisService.set(email, token); // Redis'ga saqlash
+
     this.logger.log(`User logged in with email: ${email}`);
-    return { access_token: token };
+    return {
+      message: 'Login successful',
+      data: { token },
+    };
   }
 }
