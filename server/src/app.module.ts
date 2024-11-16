@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './redis.module';  // Redis modulini o'zingiz yaratishingiz kerak
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { RedisModule } from './redis.module';  // Redis modulini o'zingiz yarati
     RedisModule,  // O'zingiz yaratgan Redis modulini import qilish
 
     // Auth moduli
-    AuthModule,
+    AuthModule, ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
