@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './redis.module';  // Redis modulini o'zingiz yaratishingiz kerak
 import { ProductsModule } from './products/products.module';
+import { MulterModule } from '@nestjs/platform-express';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -15,7 +17,15 @@ import { ProductsModule } from './products/products.module';
     RedisModule,  // O'zingiz yaratgan Redis modulini import qilish
 
     // Auth moduli
-    AuthModule, ProductsModule,
+    AuthModule, 
+
+    // Mahsulotlar moduli
+    ProductsModule, 
+
+    // Multer moduli: Fayllarni yuklash uchun sozlash
+    MulterModule.register({
+      dest: path.join(__dirname, '..', 'uploads'), // Fayllar saqlanadigan papka
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

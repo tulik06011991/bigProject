@@ -14,6 +14,8 @@ const app_service_1 = require("./app.service");
 const auth_module_1 = require("./auth/auth.module");
 const redis_module_1 = require("./redis.module");
 const products_module_1 = require("./products/products.module");
+const platform_express_1 = require("@nestjs/platform-express");
+const path = require("path");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,7 +24,11 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forRoot('mongodb+srv://baliq06011991:baliq06011991@cluster0.r0dht.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'),
             redis_module_1.RedisModule,
-            auth_module_1.AuthModule, products_module_1.ProductsModule,
+            auth_module_1.AuthModule,
+            products_module_1.ProductsModule,
+            platform_express_1.MulterModule.register({
+                dest: path.join(__dirname, '..', 'uploads'),
+            }),
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

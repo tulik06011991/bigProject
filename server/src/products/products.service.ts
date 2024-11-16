@@ -6,7 +6,7 @@ import { Product } from '../products/entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
-export class ProductsService {
+export class  ProductsService {
   constructor(
     @InjectModel('Product') private readonly productModel: Model<Product>,
   ) {}
