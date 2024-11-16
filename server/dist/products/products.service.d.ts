@@ -8,5 +8,5 @@ export declare class ProductsService {
     findAll(): Promise<Product[]>;
     findOne(id: string): Promise<Product>;
     update(id: string, updateProductDto: CreateProductDto): Promise<Product>;
-    remove(id: string): Promise<any>;
+    remove(id: string): Promise<void>;
 }

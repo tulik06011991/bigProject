@@ -29,6 +29,13 @@ let ProductsController = class ProductsController {
         });
         return product;
     }
+    async findAll() {
+        const products = await this.productService.findAll();
+        if (!products || products.length === 0) {
+            throw new common_1.NotFoundException('Mahsulotlar topilmadi');
+        }
+        return products;
+    }
 };
 exports.ProductsController = ProductsController;
 __decorate([
@@ -40,6 +47,12 @@ __decorate([
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto, Object]),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductsController.prototype, "findAll", null);
 exports.ProductsController = ProductsController = __decorate([
     (0, common_1.Controller)('products'),
     __metadata("design:paramtypes", [products_service_1.ProductsService])

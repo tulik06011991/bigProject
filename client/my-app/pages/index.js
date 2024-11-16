@@ -10,8 +10,9 @@ const ProductsList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://fakestoreapi.com/products');  // Axios bilan so'rov yuborish
-        setProducts(response.data);  // Javobdan olingan mahsulotlarni saqlash
+        const response = await axios.get('http://localhost:4000/products');  // Axios bilan so'rov yuborish
+        setProducts(response.data); 
+         // Javobdan olingan mahsulotlarni saqlash
       } catch (error) {
         console.error("Error fetching products:", error);
         setError(error.message);  // Xatolikni saqlash
@@ -22,6 +23,7 @@ const ProductsList = () => {
 
     fetchProducts();
   }, []);
+  console.log(products)
 
   // Agar loading holatida bo'lsa
   if (loading) return <p>Loading products...</p>;
