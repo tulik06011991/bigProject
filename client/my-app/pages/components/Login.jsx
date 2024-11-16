@@ -8,6 +8,7 @@ export default function Login() {
   const [error, setError] = useState(""); // Xatolik
   const [loading, setLoading] = useState(false); // Loading holati
   const router = useRouter(); // Routerni ishlatish
+  const [token, setToken] = useState({})
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,8 +23,11 @@ export default function Login() {
         password,
       });
 
+
       // Login muvaffaqiyatli bo'lsa, tokenni saqlash va foydalanuvchini yo'naltirish
-      localStorage.setItem("token", response.data.token); // Foydalanuvchi tokenini saqlash (masalan, LocalStorage)
+      // Agar token obyekt bo'lsa, uni stringga aylantirish
+localStorage.setItem('token', JSON.stringify(response.data.data.token));
+// Foydalanuvchi tokenini saqlash (masalan, LocalStorage)
       setLoading(false); // Loadingni to'xtatish
       router.push("/"); // Dashboard sahifasiga yo'naltirish
 
