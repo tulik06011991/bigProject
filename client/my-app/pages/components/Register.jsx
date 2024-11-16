@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import axios from "axios"; // axios kutubxonasini import qilish
+import { useRouter } from "next/router"; // Next.js router kutubxonasini import qilish
 
 export default function Register() {
   const [name, setName] = useState(""); // Foydalanuvchi ismi
@@ -9,6 +10,8 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState(""); // Parolni tasdiqlash
   const [error, setError] = useState(""); // Xatolik
   const [success, setSuccess] = useState(""); // Muvaffaqiyat
+
+  const router = useRouter(); // Router hookini ishlatish
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +32,11 @@ export default function Register() {
       // Agar so'rov muvaffaqiyatli bo'lsa:
       setSuccess(response.data.message);
       setError(""); // Xatolikni tozalash
+
+      // Muvaffaqiyatli ro'yxatdan o'tgandan so'ng login sahifasiga yo'naltirish
+      setTimeout(() => {
+        router.push("./Login"); // 2 soniya kutib, login sahifasiga yo'naltiradi
+      }, 2000);
     } catch (err) {
       // Agar so'rovda xatolik bo'lsa:
       setError(err.response?.data?.message || "Something went wrong");
@@ -108,7 +116,7 @@ export default function Register() {
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600">
-          Already have an account? <Link href="Login" className="text-blue-500">Login</Link>
+          Already have an account? <Link href="/login" className="text-blue-500">Login</Link>
         </p>
       </div>
     </div>
