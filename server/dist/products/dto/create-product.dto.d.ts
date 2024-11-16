@@ -1,6 +1,6 @@
 export declare class CreateProductDto {
     name: string;
-    price: Number;
+    price: number;
     description: string;
     imageUrl?: string;
 }
