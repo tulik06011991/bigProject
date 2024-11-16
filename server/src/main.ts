@@ -14,7 +14,7 @@ async function bootstrap() {
   });
   
 
-  await app.listen(4000); // Backendni 3000-portda ishga tushirish
+  await app.listen(4000); // Backendni 4000-portda ishga tushirish
 }
 
 bootstrap();
