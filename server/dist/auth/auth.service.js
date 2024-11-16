@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var AuthService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
@@ -19,38 +20,55 @@ const mongoose_2 = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt_1 = require("@nestjs/jwt");
 const auth_entity_1 = require("../auth/entities/auth.entity");
-let AuthService = class AuthService {
+let AuthService = AuthService_1 = class AuthService {
     constructor(userModel, jwtService) {
         this.userModel = userModel;
         this.jwtService = jwtService;
+        this.logger = new common_1.Logger(AuthService_1.name);
     }
     async register(createUserDto) {
         const { email, password, name } = createUserDto;
+        const existingUser = await this.userModel.findOne({ email });
+        if (existingUser) {
+            this.logger.warn(`User with email ${email} already exists`);
+            throw new common_1.HttpException('User with this email already exists', common_1.HttpStatus.BAD_REQUEST);
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new this.userModel({
             email,
             password: hashedPassword,
             name,
         });
-        return newUser.save();
+        try {
+            await newUser.save();
+            this.logger.log(`User registered with email: ${email}`);
+            return newUser;
+        }
+        catch (error) {
+            this.logger.error('Registration failed', error.stack);
+            throw new common_1.HttpException('Failed to register user', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     async login(loginUserDto) {
         const { email, password } = loginUserDto;
         const auth = await this.userModel.findOne({ email });
         if (!auth) {
-            throw new Error('auth not found');
+            this.logger.warn(`Auth not found for email: ${email}`);
+            throw new common_1.HttpException('Invalid credentials: User not found', common_1.HttpStatus.UNAUTHORIZED);
         }
         const isMatch = await bcrypt.compare(password, auth.password);
         if (!isMatch) {
-            throw new Error('Invalid credentials');
+            this.logger.warn(`Invalid credentials for email: ${email}`);
+            throw new common_1.HttpException('Invalid credentials: Incorrect password', common_1.HttpStatus.UNAUTHORIZED);
         }
         const payload = { email: auth.email, sub: auth._id };
         const token = this.jwtService.sign(payload);
+        this.logger.log(`User logged in with email: ${email}`);
         return { access_token: token };
     }
 };
 exports.AuthService = AuthService;
-exports.AuthService = AuthService = __decorate([
+exports.AuthService = AuthService = AuthService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(auth_entity_1.auth.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,

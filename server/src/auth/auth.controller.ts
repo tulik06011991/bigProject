@@ -1,19 +1,29 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from '../auth/dto/create-auth.dto';
 import { LoginUserDto } from '../auth/dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   constructor(private readonly authService: AuthService) {}
 
   // Foydalanuvchini ro'yxatdan o'tkazish
   @Post('register')
   async register(@Body() createAuthDto: CreateAuthDto) {
     try {
-      return await this.authService.register(createAuthDto);
+      const user = await this.authService.register(createAuthDto);
+      return {
+        message: 'Registration successful',
+        data: user,
+      };
     } catch (error) {
-      throw new Error(`Registration failed: ${error.message}`);
+      this.logger.error('Registration failed', error.stack);
+      throw new HttpException(
+        { message: 'Registration failed', error: error.message },
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -21,9 +31,17 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
     try {
-      return await this.authService.login(loginUserDto);
+      const token = await this.authService.login(loginUserDto);
+      return {
+        message: 'Login successful',
+        data: { token },
+      };
     } catch (error) {
-      throw new Error(`Login failed: ${error.message}`);
+      this.logger.error('Login failed', error.stack);
+      throw new HttpException(
+        { message: 'Login failed', error: error.message },
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 }
