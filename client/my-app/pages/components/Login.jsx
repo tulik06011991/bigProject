@@ -29,7 +29,7 @@ export default function Login() {
 localStorage.setItem('token', JSON.stringify(response.data.data.token));
 // Foydalanuvchi tokenini saqlash (masalan, LocalStorage)
       setLoading(false); // Loadingni to'xtatish
-      router.push("/"); // Dashboard sahifasiga yo'naltirish
+      router.push("./Register"); // Dashboard sahifasiga yo'naltirish
 
     } catch (err) {
       setLoading(false); // Loadingni to'xtatish
