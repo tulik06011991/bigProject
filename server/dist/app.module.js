@@ -28,11 +28,11 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             products_module_1.ProductsModule,
             platform_express_1.MulterModule.register({
-                dest: path.join(__dirname, '..', './upload'),
+                dest: path.join(__dirname, '..', 'uploads'),
             }),
             serve_static_1.ServeStaticModule.forRoot({
-                rootPath: path.join(__dirname, '..', 'upload'),
-                serveRoot: './upload',
+                rootPath: path.join(__dirname, '..', 'uploads'),
+                serveRoot: '/uploads',
             }),
         ],
         controllers: [app_controller_1.AppController],

@@ -8,21 +8,19 @@ export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image')) // Multer interceptorini ishlatish
+  @UseInterceptors(FileInterceptor('image'))
   async create(
     @Body() createProductDto: CreateProductDto,
-    @UploadedFile() image: Express.Multer.File, // Uploaded fayl
+    @UploadedFile() image: Express.Multer.File,
   ) {
-    const imageUrl = image ? `uploads/${image.filename}` : ''; // Faylni saqlash joyi
-
-    // Mahsulotni yaratish
+    const imageUrl = image ? `${image.filename}` : ''; // Fayl yo'lini olish
     const product = await this.productService.create({
       ...createProductDto,
       imageUrl,
     });
-
-    return product; // Yaratilgan mahsulotni qaytarish
+    return product;
   }
+  
 
   @Get()
   async findAll() {
