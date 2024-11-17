@@ -25,13 +25,13 @@ import * as path from 'path';
 
     // Multer moduli: Fayllarni yuklash uchun sozlash
     MulterModule.register({
-      dest: path.join(__dirname, '..', 'uploads'), // Fayllar saqlanadigan papka
+      dest: path.join(__dirname, '..', './upload'), // Fayllar saqlanadigan papka
     }),
 
     // ServeStatic moduli: Statik fayllar xizmatini qo'shish
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', 'uploads'), // Statik fayllar joylashgan papka
-      serveRoot: '/uploads', // URL prefiksi (http://localhost:3000/uploads)
+      rootPath: path.join(__dirname, '..', 'upload'), // Statik fayllar joylashgan papka
+      serveRoot: './upload', // URL prefiksi (http://localhost:3000/uploads)
     }),
   ],
   controllers: [AppController],
