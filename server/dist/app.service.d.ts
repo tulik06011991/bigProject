@@ -1,3 +1,4 @@
+import { Response } from 'express';
 export declare class AppService {
-    getHello(): string;
+    getFileByFileName(fileName: string, res: Response): void;
 }
