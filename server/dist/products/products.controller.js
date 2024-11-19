@@ -22,7 +22,7 @@ let ProductsController = class ProductsController {
         this.productService = productService;
     }
     async create(createProductDto, image) {
-        const imageUrl = image ? `uploads/${image.filename}` : '';
+        const imageUrl = image ? `${image.filename}` : '';
         const product = await this.productService.create({
             ...createProductDto,
             imageUrl,

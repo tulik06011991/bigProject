@@ -33,6 +33,11 @@ const ProductsList = () => {
   // Agar xatolik bo'lsa
   if (error) return <p className="text-red-500 text-center">Failed to load products: {error}</p>;
 
+  // Agar mahsulotlar topilmasa
+  if (products.length === 0) {
+    return <p className="text-center text-gray-500">No products found.</p>;
+  }
+
   // Mahsulotlar ro'yxati
   return (
     <div className="container mx-auto p-4">
