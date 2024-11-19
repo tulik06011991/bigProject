@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UploadedFile, UseInterceptors, Get, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Body, UploadedFile, UseInterceptors, HttpException, HttpStatus,  Get, Param, NotFoundException, Delete } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express'; // Multer Interceptor
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -36,4 +36,21 @@ export class ProductsController {
 
     return products; // Mahsulotlar ro'yxatini qaytarish
   }
+
+
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<{ message: string }> {
+    await this.productService.remove(id); // findByIdAndDelete emas, remove chaqiriladi
+    return { message: 'Item deleted successfully' };
+  }
+  
+  
 }
+
+
+// async remove(id: string): Promise<void> {
+//   const deletedProduct = await this.productModel.findByIdAndDelete(id).exec();
+//   if (!deletedProduct) {
+//     throw new NotFoundException(`Mahsulot ID ${id} topilmadi`);
+//   }
+// }
