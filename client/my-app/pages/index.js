@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';  // Axios kutubxonasini import qilamiz
+import axios from 'axios';
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);  // Mahsulotlarni saqlash
@@ -10,13 +10,16 @@ const ProductsList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/products');  // Axios bilan so'rov yuborish
-        setProducts(response.data);  // Javobdan olingan mahsulotlarni saqlash
+        // Backenddan ma'lumot olish
+        const response = await axios.get('http://localhost:4000/products');  
+        setProducts(response.data);  // Mahsulotlarni saqlash
       } catch (error) {
+        // Xatolikni log qilish
         console.error("Error fetching products:", error);
-        setError(error.message);  // Xatolikni saqlash
+        setError(error.message);  // Xatolikni ko'rsatish
       } finally {
-        setLoading(false);  // So'rov tugagach, loading ni o'chirish
+        // Loading holatini o'chirish
+        setLoading(false);
       }
     };
 
