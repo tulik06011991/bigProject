@@ -25,18 +25,31 @@ let ProductsService = class ProductsService {
         return createdProduct.save();
     }
     async findAll() {
-        return this.productModel.find().exec();
+        const products = await this.productModel.find().exec();
+        if (!products || products.length === 0) {
+            throw new common_1.NotFoundException('Mahsulotlar topilmadi');
+        }
+        return products;
     }
     async findOne(id) {
-        return this.productModel.findById(id).exec();
+        const product = await this.productModel.findById(id).exec();
+        if (!product) {
+            throw new common_1.NotFoundException(`Mahsulot ID ${id} topilmadi`);
+        }
+        return product;
     }
     async update(id, updateProductDto) {
-        return this.productModel.findByIdAndUpdate(id, updateProductDto, {
-            new: true,
-        }).exec();
+        const updatedProduct = await this.productModel.findByIdAndUpdate(id, updateProductDto, { new: true }).exec();
+        if (!updatedProduct) {
+            throw new common_1.NotFoundException(`Mahsulot ID ${id} topilmadi`);
+        }
+        return updatedProduct;
     }
     async remove(id) {
-        return this.productModel.findByIdAndDelete(id).exec();
+        const deletedProduct = await this.productModel.findByIdAndDelete(id).exec();
+        if (!deletedProduct) {
+            throw new common_1.NotFoundException(`Mahsulot ID ${id} topilmadi`);
+        }
     }
 };
 exports.ProductsService = ProductsService;

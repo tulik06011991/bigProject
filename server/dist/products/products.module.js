@@ -13,6 +13,7 @@ const products_controller_1 = require("./products.controller");
 const products_service_1 = require("./products.service");
 const product_entity_1 = require("./entities/product.entity");
 const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
 const path = require("path");
 let ProductsModule = class ProductsModule {
 };
@@ -22,16 +23,14 @@ exports.ProductsModule = ProductsModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: 'Product', schema: product_entity_1.ProductSchema }]),
             platform_express_1.MulterModule.register({
-                dest: path.join(__dirname, '..', 'uploads'),
-                limits: {
-                    fileSize: 10 * 1024 * 1024,
-                },
-                fileFilter: (req, file, cb) => {
-                    if (!file.mimetype.startsWith('image/')) {
-                        return cb(new Error('Faqat rasm fayllarini yuklash mumkin!'), false);
-                    }
-                    cb(null, true);
-                },
+                storage: (0, multer_1.diskStorage)({
+                    destination: './uploads',
+                    filename: (req, file, cb) => {
+                        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+                        const ext = path.extname(file.originalname);
+                        cb(null, `${uniqueSuffix}${ext}`);
+                    },
+                }),
             }),
         ],
         controllers: [products_controller_1.ProductsController],
