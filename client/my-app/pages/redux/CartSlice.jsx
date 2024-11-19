@@ -16,13 +16,15 @@ const cartSlice = createSlice({
       const product = action.payload;
       const existingProduct = state.cartItems.find(item => item.id === product.id);
       if (existingProduct) {
-        // Agar mahsulot allaqachon savatda bo'lsa, uni yangilash
+        // Agar mahsulot mavjud bo'lsa, uning miqdorini oshirish
         existingProduct.quantity += 1;
       } else {
         // Yangi mahsulotni qo'shish
         state.cartItems.push({ ...product, quantity: 1 });
       }
     },
+    
+    
     // Mahsulotni savatdan olib tashlash
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
@@ -31,10 +33,12 @@ const cartSlice = createSlice({
     updateQuantity: (state, action) => {
       const { id, quantity } = action.payload;
       const product = state.cartItems.find(item => item.id === id);
-      if (product) {
-        product.quantity = quantity;
+      if (product && quantity > 0) {
+        product.quantity = quantity; // Miqdorni yangilash
       }
     },
+    
+    
     // Savatni tozalash
     clearCart: (state) => {
       state.cartItems = [];

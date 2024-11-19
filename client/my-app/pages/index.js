@@ -14,6 +14,7 @@ const ProductsList = () => {
       try {
         const response = await axios.get('http://localhost:4000/products');
         setProducts(response.data);
+        console.log(response.data);  // Mahsulotlarni konsolga chiqarish
       } catch (error) {
         console.error("Error fetching products:", error);
         setError(error.message);
@@ -42,9 +43,15 @@ const ProductsList = () => {
       <h1 className="text-3xl font-bold text-center mb-8 text-blue-600">Our Products</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <div key={product.id} className="border border-gray-200 rounded-lg p-4 shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <div 
+            key={product.id || product.title}  // Noyob 'key' qiymati
+            className="border border-gray-200 rounded-lg p-4 shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          >
             <div className="relative pb-2/3 overflow-hidden">
-              <img src={`http://localhost:4000/files/${product.imageUrl}`} alt="Mahsulot rasm" />
+              <img 
+                src={`http://localhost:4000/files/${product.imageUrl}`} 
+                alt={product.title} 
+              />
             </div>
             <h2 className="text-lg font-semibold mb-2 text-gray-800">{product.title}</h2>
             <p className="text-gray-600 mb-4 text-sm line-clamp-3">{product.description}</p>
