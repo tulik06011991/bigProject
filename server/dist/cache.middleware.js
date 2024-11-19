@@ -6,22 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
+exports.CacheMiddleware = void 0;
 const common_1 = require("@nestjs/common");
-const path_1 = require("path");
-let AppService = class AppService {
-    getFileByFileName(fileName, res) {
-        const filePath = (0, path_1.join)(process.cwd(), 'uploads', fileName);
-        return res.sendFile(filePath, (err) => {
-            if (err) {
-                console.error('Error sending file:', err);
-                res.status(500).send('Failed to send file');
-            }
-        });
+let CacheMiddleware = class CacheMiddleware {
+    use(req, res, next) {
+        if (req.url.startsWith('/files')) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+        next();
     }
 };
-exports.AppService = AppService;
-exports.AppService = AppService = __decorate([
+exports.CacheMiddleware = CacheMiddleware;
+exports.CacheMiddleware = CacheMiddleware = __decorate([
     (0, common_1.Injectable)()
-], AppService);
-//# sourceMappingURL=app.service.js.map
+], CacheMiddleware);
+//# sourceMappingURL=cache.middleware.js.map

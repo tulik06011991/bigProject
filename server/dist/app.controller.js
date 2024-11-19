@@ -25,7 +25,7 @@ let AppController = class AppController {
 };
 exports.AppController = AppController;
 __decorate([
-    (0, common_1.Get)('file/:filename'),
+    (0, common_1.Get)('files/:fileName'),
     __param(0, (0, common_1.Param)('fileName')),
     __param(1, (0, common_1.Response)()),
     __metadata("design:type", Function),

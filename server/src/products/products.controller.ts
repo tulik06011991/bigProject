@@ -13,7 +13,11 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
     @UploadedFile() image: Express.Multer.File,
   ) {
-    const imageUrl = image ? `${image.filename}` : ''; // Fayl yo'lini olish
+
+    const imageUrl = image ? `${image.filename}` : ''; // Faylni saqlash joyi
+
+    // Mahsulotni yaratish
+
     const product = await this.productService.create({
       ...createProductDto,
       imageUrl,
