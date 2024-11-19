@@ -8,9 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
+const path_1 = require("path");
 let AppService = class AppService {
-    getHello() {
-        return 'Hello Tolqin!';
+    getFileByFileName(fileName, res) {
+        const filePath = (0, path_1.join)(process.cwd(), 'uploads', fileName);
+        return res.sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Error sending file:', err);
+                res.status(500).send('Failed to send file');
+            }
+        });
     }
 };
 exports.AppService = AppService;

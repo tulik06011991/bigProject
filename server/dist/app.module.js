@@ -17,6 +17,7 @@ const products_module_1 = require("./products/products.module");
 const platform_express_1 = require("@nestjs/platform-express");
 const serve_static_1 = require("@nestjs/serve-static");
 const path = require("path");
+const path_1 = require("path");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,8 +32,8 @@ exports.AppModule = AppModule = __decorate([
                 dest: path.join(__dirname, '..', 'upload'),
             }),
             serve_static_1.ServeStaticModule.forRoot({
-                rootPath: path.join(__dirname, '..', 'upload'),
-                serveRoot: '/upload',
+                rootPath: (0, path_1.join)(__dirname, '..', 'uploads'),
+                serveRoot: '/uploads',
             }),
         ],
         controllers: [app_controller_1.AppController],

@@ -8,6 +8,7 @@ import { ProductsModule } from './products/products.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -29,10 +30,12 @@ import * as path from 'path';
     }),
 
     // ServeStatic moduli: Statik fayllar xizmatini qo'shish
+   
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', 'upload'), // Statik fayllar joylashgan papka
-      serveRoot: '/upload', // URL prefiksi (http://localhost:3000/upload)
+      rootPath: join(__dirname, '..', 'uploads'),  // Fayllar joylashgan papka
+      serveRoot: '/uploads',  // URL prefiksi
     }),
+    
   ],
   controllers: [AppController],
   providers: [AppService],
