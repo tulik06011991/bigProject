@@ -50,11 +50,10 @@ const ProductsList = () => {
           <div key={product.id} className="border border-gray-200 rounded-lg p-4 shadow-lg hover:shadow-2xl transition-shadow duration-300">
             {/* Rasmni o'zgartirish */}
             <div className="relative pb-2/3 overflow-hidden">
-              <img 
-                src={`http://localhost:4000/files/${product.imageUrl}`} 
-                alt={product.title} 
-                className="absolute inset-0 w-full h-full object-cover rounded-md"
-              />
+            <img src={`http://localhost:4000/files/${product.imageUrl}` }alt="Mahsulot rasm" />
+
+
+ 
             </div>
 
             <h2 className="text-lg font-semibold mb-2 text-gray-800">{product.title}</h2>

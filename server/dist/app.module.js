@@ -9,16 +9,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const serve_static_1 = require("@nestjs/serve-static");
+const path = require("path");
+const path_1 = require("path");
+const cache_middleware_1 = require("./cache.middleware");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const auth_module_1 = require("./auth/auth.module");
 const redis_module_1 = require("./redis.module");
 const products_module_1 = require("./products/products.module");
 const platform_express_1 = require("@nestjs/platform-express");
-const serve_static_1 = require("@nestjs/serve-static");
-const path = require("path");
-const path_1 = require("path");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(cache_middleware_1.CacheMiddleware).forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -33,7 +37,7 @@ exports.AppModule = AppModule = __decorate([
             }),
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: (0, path_1.join)(__dirname, '..', 'uploads'),
-                serveRoot: '/uploads',
+                serveRoot: '/files',
             }),
         ],
         controllers: [app_controller_1.AppController],
