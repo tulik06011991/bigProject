@@ -1,51 +1,36 @@
-// src/redux/cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-// Dastlabki holat
 const initialState = {
-  cartItems: [],  // Savatdagi mahsulotlar
+  cartItems: [], // Cartda saqlanadigan mahsulotlar
 };
 
-// Slice yaratish
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // Mahsulotni savatga qo'shish
     addToCart: (state, action) => {
       const product = action.payload;
-      const existingProduct = state.cartItems.find(item => item.id === product.id);
-      if (existingProduct) {
-        // Agar mahsulot mavjud bo'lsa, uning miqdorini oshirish
-        existingProduct.quantity += 1;
-      } else {
-        // Yangi mahsulotni qo'shish
-        state.cartItems.push({ ...product, quantity: 1 });
-      }
+
+      // Mahsulotni tekshirib, agar mavjud bo'lsa miqdorini oshiradi
+      state.cartItems.push({ ...product, quantity: 1 });
+
+      console.log('Updated cart items:', state.cartItems); // Cart items yangilanganini ko'rasiz
     },
-    
-    
-    // Mahsulotni savatdan olib tashlash
     removeFromCart: (state, action) => {
+      // Faqat bitta mahsulotni id orqali olib tashlash
       state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
     },
-    // Mahsulot miqdorini o'zgartirish
     updateQuantity: (state, action) => {
+      // Mahsulotning miqdorini yangilash
       const { id, quantity } = action.payload;
       const product = state.cartItems.find(item => item.id === id);
-      if (product && quantity > 0) {
-        product.quantity = quantity; // Miqdorni yangilash
+      if (product) {
+        product.quantity = quantity;
       }
-    },
-    
-    
-    // Savatni tozalash
-    clearCart: (state) => {
-      state.cartItems = [];
     }
   },
 });
 
-// Actions va reducerlarni export qilish
-export const { addToCart, removeFromCart, updateQuantity, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
+
 export default cartSlice.reducer;
