@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  cartItems: [],
+  cartItems: [], // Cartda saqlanadigan mahsulotlar
 };
 
 const cartSlice = createSlice({
@@ -11,20 +11,25 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       console.log('Adding to cart:', action.payload); // Bu yerda yangi mahsulotni ko'rasiz
       const product = action.payload;
+      // cartItems ichida id bo'yicha mavjud bo'lgan mahsulotni tekshirish
       const existingProduct = state.cartItems.find(item => item.id === product.id);
 
       if (existingProduct) {
-        existingProduct.quantity += 1;  // Mahsulot miqdorini oshirish
+        // Agar mahsulot mavjud bo'lsa, miqdorini oshirish
+        existingProduct.quantity += 1;
       } else {
-        state.cartItems.push({ ...product, quantity: 1 });  // Yangi mahsulot qo'shish
+        // Yangi mahsulot qo'shish
+        state.cartItems.push({ ...product, quantity: 1 });
       }
 
-      console.log('Updated cart items:', state.cartItems); // Cart items ni yangilangan holatda ko'rasiz
+      console.log('Updated cart items:', state.cartItems); // Cart items yangilanganini ko'rasiz
     },
     removeFromCart: (state, action) => {
+      // Mahsulotni cartdan olib tashlash
       state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
     },
     updateQuantity: (state, action) => {
+      // Mahsulotning miqdorini yangilash
       const { id, quantity } = action.payload;
       const product = state.cartItems.find(item => item.id === id);
       if (product) {
