@@ -5,7 +5,6 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems); // Savatdagi mahsulotlar
   const dispatch = useDispatch(); // Dispatchni olish
   console.log(cartItems);
-  
 
   // Savatdagi mahsulotlar bo'lsa, yoki bo'lmasa tekshirish
   if (!cartItems) {
