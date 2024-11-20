@@ -15,6 +15,7 @@ const product_entity_1 = require("./entities/product.entity");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
 const path = require("path");
+const serve_static_1 = require("@nestjs/serve-static");
 let ProductsModule = class ProductsModule {
 };
 exports.ProductsModule = ProductsModule;
@@ -22,6 +23,10 @@ exports.ProductsModule = ProductsModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: 'Product', schema: product_entity_1.ProductSchema }]),
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: path.join(__dirname, '..', 'uploads'),
+                serveRoot: '/uploads',
+            }),
             platform_express_1.MulterModule.register({
                 storage: (0, multer_1.diskStorage)({
                     destination: './uploads',

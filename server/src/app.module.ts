@@ -15,26 +15,36 @@ import { MulterModule } from '@nestjs/platform-express';
 @Module({
   imports: [
     // MongoDB uchun Mongoose modulini sozlash
-    MongooseModule.forRoot('mongodb+srv://baliq06011991:baliq06011991@cluster0.r0dht.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'),
+    MongooseModule.forRoot(
+      'mongodb+srv://baliq06011991:baliq06011991@cluster0.r0dht.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
+
+        connectTimeoutMS: 30000
+      }
+
+    ),
 
     // Redis moduli
-    RedisModule, 
+    RedisModule,
 
     // Auth moduli
-    AuthModule, 
+    AuthModule,
 
     // Mahsulotlar moduli
-    ProductsModule, 
+    ProductsModule,
 
     // Multer moduli: Fayllarni yuklash uchun sozlash
     MulterModule.register({
+
       dest: path.join(__dirname, '..', 'upload'), // Fayllar saqlanadigan papka
+
     }),
 
     // ServeStatic moduli: Statik fayllar xizmatini qo'shish
     ServeStaticModule.forRoot({
+
       rootPath: join(__dirname, '..', 'uploads'),  // Fayllar joylashgan papka
       serveRoot: '/files', // URL prefiksi (http://localhost:4000/files)
+
     }),
   ],
   controllers: [AppController],

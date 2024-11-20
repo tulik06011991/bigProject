@@ -13,7 +13,7 @@ import { auth, authSchema } from './entities/auth.entity';  // `auth` va `AuthSc
       secret: 'your-jwt-secret',  // O'zgaruvchilarni xavfsiz saqlang
       signOptions: { expiresIn: '1h' },
     }),
-    RedisModule,  // Redis modulini qo'shamiz
+    RedisModule,  // Redis modulini qo'shamiz!
   ],
   controllers: [AuthController],
   providers: [AuthService],
