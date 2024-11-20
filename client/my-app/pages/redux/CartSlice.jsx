@@ -17,7 +17,7 @@ const cartSlice = createSlice({
       console.log('Updated cart items:', state.cartItems); // Cart items yangilanganini ko'rasiz
     },
     removeFromCart: (state, action) => {
-      // Mahsulotni cartdan olib tashlash
+      // Faqat bitta mahsulotni id orqali olib tashlash
       state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
     },
     updateQuantity: (state, action) => {

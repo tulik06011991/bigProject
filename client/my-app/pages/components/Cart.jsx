@@ -12,8 +12,10 @@ const Cart = () => {
   }
 
   const handleRemove = (productId) => {
-    dispatch(removeFromCart({ id: productId })); // faqat id bo'yicha mahsulotni o'chirish
+    console.log("Removing product with id:", productId);  // Tekshirish uchun
+    dispatch(removeFromCart({ id: productId }));
   };
+  
 
   const handleQuantityChange = (product, quantity) => {
     if (quantity > 0) {
@@ -62,11 +64,11 @@ const Cart = () => {
                 </div>
 
                 <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full"
-                  onClick={() => handleRemove(product.id)} // id orqali mahsulotni o'chirish
-                >
-                  Remove from Cart
-                </button>
+  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full"
+  onClick={() => handleRemove(product.id)} // id orqali mahsulotni o'chirish
+>
+  Remove from Cart
+</button>
               </div>
             </div>
           ))}
