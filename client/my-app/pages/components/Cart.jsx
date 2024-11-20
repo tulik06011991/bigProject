@@ -15,7 +15,7 @@ const Cart = () => {
     console.log("Removing product with id:", productId);  // Tekshirish uchun
     dispatch(removeFromCart({ id: productId }));
   };
-  
+
 
   const handleQuantityChange = (product, quantity) => {
     if (quantity > 0) {
@@ -46,7 +46,7 @@ const Cart = () => {
               <div className="mt-4">
                 <h2 className="text-lg font-semibold text-gray-800 mb-2">{product.title}</h2>
                 <p className="text-gray-600 mb-4">Price: <span className="text-green-600 font-bold">${product.price}</span></p>
-                
+
                 <div className="flex items-center mb-4">
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition-colors mr-2"
@@ -64,11 +64,11 @@ const Cart = () => {
                 </div>
 
                 <button
-  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full"
-  onClick={() => handleRemove(product.id)} // id orqali mahsulotni o'chirish
->
-  Remove from Cart
-</button>
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full"
+                  onClick={() => handleRemove(product.id)} // id orqali mahsulotni o'chirish
+                >
+                  Remove from Cart
+                </button>
               </div>
             </div>
           ))}
