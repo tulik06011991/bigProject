@@ -3,6 +3,6 @@ import cartReducer from './cartSlice';
 
 export const store = configureStore({
   reducer: {
-    cart: cartReducer, // Savat reducerini qo'shish
+    cart: cartReducer,
   },
 });
