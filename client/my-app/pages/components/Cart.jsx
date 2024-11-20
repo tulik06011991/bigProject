@@ -11,8 +11,8 @@ const Cart = () => {
     return <p className="text-center text-red-500">Error: Cart is not defined</p>;
   }
 
-  const handleRemove = (product) => {
-    dispatch(removeFromCart(product)); // Mahsulotni savatdan olib tashlash
+  const handleRemove = (productId) => {
+    dispatch(removeFromCart({ id: productId })); // faqat id bo'yicha mahsulotni o'chirish
   };
 
   const handleQuantityChange = (product, quantity) => {
@@ -63,7 +63,7 @@ const Cart = () => {
 
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors w-full"
-                  onClick={() => handleRemove(product)}
+                  onClick={() => handleRemove(product.id)} // id orqali mahsulotni o'chirish
                 >
                   Remove from Cart
                 </button>
