@@ -9,18 +9,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log('Adding to cart:', action.payload); // Bu yerda yangi mahsulotni ko'rasiz
       const product = action.payload;
-      // cartItems ichida id bo'yicha mavjud bo'lgan mahsulotni tekshirish
-      const existingProduct = state.cartItems.find(item => item.id === product.id);
 
-      if (existingProduct) {
-        // Agar mahsulot mavjud bo'lsa, miqdorini oshirish
-        existingProduct.quantity += 1;
-      } else {
-        // Yangi mahsulot qo'shish
-        state.cartItems.push({ ...product, quantity: 1 });
-      }
+      // Mahsulotni tekshirib, agar mavjud bo'lsa miqdorini oshiradi
+      state.cartItems.push({ ...product, quantity: 1 });
 
       console.log('Updated cart items:', state.cartItems); // Cart items yangilanganini ko'rasiz
     },
